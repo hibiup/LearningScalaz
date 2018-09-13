@@ -1,9 +1,9 @@
 package LearningScalaz
 
-package day_1 {
-    import scalaz._
-    import Scalaz._
+import scalaz._
+import Scalaz._
 
+package day_1 {
     object test_Equal {
         /**
           * Scalaz equivalent for the Eq typeclass is called Equal */
