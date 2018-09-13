@@ -83,7 +83,8 @@ package day_1 {
         }
 
         def apply(): Unit = {
-            /** 5) 在当前环境中调用 object CanTruthy 实例，生成 trait CanTruthy 的隐式实例。并经由 object CanTruthy
+            /**
+              * 5) 在当前环境中调用 object CanTruthy 实例，生成 trait CanTruthy 的隐式实例。并经由 object CanTruthy
               * 的 trythys 工厂方法将业务逻辑作为函数参数 f = {...} 传递给新的 trait CanTruthy 实例的 trythy 方法。
               * 至此，系统中已经存在了一个能够用于执行 truthy 方法的 trait CanTruthy 实例。*/
             implicit val intCanTruthy: CanTruthy[Int] = CanTruthy.truthy({
@@ -96,24 +97,28 @@ package day_1 {
         }
 
         trait CanTruthyOps[A] {
-            def self: A
-            implicit def F: CanTruthy[A]
-            /** 8）trait CanTruthyOps 具有另一个 truthy 方法，而这个方法又调用 CanTruthy.truthy 方法由 object CanTruthy
+            def self: A                   // 这个 self 是要转换的对象，并不是 CanTruthyOps 实例自己。
+            implicit def F: CanTruthy[A]  // 这个 F 变量定义成 implicit 似乎没有什么意义
+
+            /**
+              * 8）trait CanTruthyOps 具有另一个 truthy 方法，而这个方法又调用 CanTruthy.truthy 方法由 object CanTruthy
               * 生成的 trait CanTruthy 实例在这里被调用。*/
             final def truthy: Boolean = F.truthy(self)
         }
 
         implicit def toCanTruthyOps[A](v: A)(implicit ev: CanTruthy[A]) =
-            /** 7) 生成一个 CanTruthyOps 实例，并将隐式转换目标和 trait CanTruthy 隐式实例传入。*/
+            /**
+              * 7) 生成一个 CanTruthyOps 实例，并将隐式转换目标和 trait CanTruthy 隐式实例传入。*/
             new CanTruthyOps[A] {
                 def self = v
                 implicit def F: CanTruthy[A] = ev
             }
 
         def truthyInteger(implicit intCanTruthy: CanTruthy[Int]): Unit = {
-            /** 6) 隐式触发上面的 toCanIsTruthyOps 方法（第 7 步），并将 v=10， ev=intCanTruthy 作为参数传入 这个 intCanTruthy 就是
+            /**
+              * 6) 隐式触发上面的 toCanIsTruthyOps 方法（第 7 步），并将 v=10， ev=intCanTruthy 作为参数传入 这个 intCanTruthy 就是
               * 第 5 步生成并经由参数传入的隐式 trait CanTruthy 实例 */
-            10.truthy  // 10) 调用 trait CanTruthyOps 的 truthy 方法，间接调用 trait CanTruthy 的 truthy 方法.s
+            println(10.truthy)    // 10) 调用 trait CanTruthyOps 的 truthy 方法，间接调用 trait CanTruthy 的 truthy 方法.s
         }
 
     }
