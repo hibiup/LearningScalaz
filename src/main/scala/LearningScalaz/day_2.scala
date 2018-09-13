@@ -39,8 +39,8 @@ package day_2 {
     /** 也可以作用于其他类型 */
     object test_Functor_with_List {
         def apply(): Unit = {
-            val res = List(1, 2, 3) map {_ * 2}
-            println(res)
+            val res = List(1, 2, 3) map {(_:Int) * (_:Int)}.curried
+            println(res map {_(9)} )
         }
     }
 }
