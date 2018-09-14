@@ -9,4 +9,8 @@ class day_2_test extends FlatSpec{
         test_Functor_with_Function()
         test_Functor_with_List()
     }
+
+    "Applicative" should "" in{
+        test_Applicative_typeclass()
+    }
 }

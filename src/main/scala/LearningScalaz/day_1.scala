@@ -70,11 +70,11 @@ package day_1 {
               *
               * 1）object CanTruthy 不是来自 trait CanTruthy，它们只是同名同构。(虽然可以 extends 自 trait CanTruthy，但是不是必须的)
               *
-              * 2）object CanTruthy 的 truthys 方法是一个工厂方法，它生成一个真正的 trait CanTruthy 实例。
+              * 2）object CanTruthy 的 truthy 方法是一个工厂方法，不是来自 trait Contruthy 的那个，它生成一个真正的 trait CanTruthy 实例。
               *
-              * 3) 新的 trait CanTruthy 实例不同于 object CanTruthy！它的 truthys 方法也不是工厂方法。
+              * 3) 新的 trait CanTruthy 实例不同于 object CanTruthy！它的 truthy 方法也不是工厂方法。
               *
-              * 4）新的 trait CanTruthy 实例的 truthys 方法调用来自工厂方法的参数 f = {...} 用于自己的参数的处理。
+              * 4）新的 trait CanTruthy 实例的 truthy 方法调用来自工厂方法的参数 f = {...} 用于自己的参数的处理。
               *
               * */
             def truthy[A](f: A => Boolean): CanTruthy[A] = new CanTruthy[A] {
@@ -84,8 +84,8 @@ package day_1 {
 
         def apply(): Unit = {
             /**
-              * 5) 在当前环境中调用 object CanTruthy 实例，生成 trait CanTruthy 的隐式实例。并经由 object CanTruthy
-              * 的 trythys 工厂方法将业务逻辑作为函数参数 f = {...} 传递给新的 trait CanTruthy 实例的 trythy 方法。
+              * 5) 在当前环境中调用 object CanTruthy 实例，生成 trait CanTruthy 的隐式实例。经由 object CanTruthy
+              * 的 truthy 工厂方法将业务逻辑作为函数参数 f = {...} 传递给新的 trait CanTruthy 实例的 truthy 方法。
               * 至此，系统中已经存在了一个能够用于执行 truthy 方法的 trait CanTruthy 实例。*/
             implicit val intCanTruthy: CanTruthy[Int] = CanTruthy.truthy({
                 case 0 => false
@@ -121,6 +121,6 @@ package day_1 {
             println(10.truthy)    // 10) 调用 trait CanTruthyOps 的 truthy 方法，间接调用 trait CanTruthy 的 truthy 方法.s
         }
 
-    }
 
+    }
 }
