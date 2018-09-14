@@ -105,4 +105,17 @@ package day_5 {
             println(routine)  //Some(Pole(3,2))
         }
     }
+
+    object Test_List {
+        def apply() = {
+            println{
+                /**
+                  * x <- a |-> b 生成 [a, b] 闭区间的数列，等同于： (1 |-> 50) filter { x => x.shows contains '7' }
+                  * */
+                for {
+                    x <- 1 |-> 50 if x.shows contains '7'   // 适用 if 条件子句。
+                } yield x
+            }
+        }
+    }
 }

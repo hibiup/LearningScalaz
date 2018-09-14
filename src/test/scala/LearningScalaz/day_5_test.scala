@@ -12,4 +12,8 @@ class day_5_test extends FlatSpec{
     "Pole Game" should "" in {
         PoleSample()
     }
+
+    "List" should "" in {
+        Test_List()
+    }
 }
